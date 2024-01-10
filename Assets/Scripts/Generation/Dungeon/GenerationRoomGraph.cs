@@ -6,42 +6,89 @@ using Random = UnityEngine.Random;
 
 public class GenerationRoomGraph : MonoBehaviour
 {
-    public List<RoomParams> m_listRooms = new List<RoomParams>();
+    private List<RoomParams> m_listRooms = new List<RoomParams>();
+    public List<RoomParams> MyListRooms
+    {
+        get { return m_listRooms; }
+        set { m_listRooms = value; }
+    }
 
-    // Start is called before the first frame update
+    [SerializeField] private int m_maxLinkRooms;
+    private int m_iteration = 0;
+
     void Start()
     {
-        Instanciation(1);
+        Init(m_maxLinkRooms);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Init(int p_max)
     {
+        m_listRooms.Add(InitRoom());
 
+        GenerateNextRoom(p_max);
     }
 
-    private void Instanciation(int p_index)
+    //GENERATE ROOMS
+    public void GenerateNextRoom(int p_max)
     {
-        m_listRooms.Add(InitRoom(true, 4));
-
-        int l_randDoor = RandomInt(1, 5);
-        int l_randTraps= RandomInt(0, 8);
-
-        for (int i = 0; i < p_index; i++)
+        while(m_iteration != p_max)
         {
-            m_listRooms.Add(CreateRoom(i, l_randDoor, l_randTraps));
+            m_iteration++;
         }
 
-        m_listRooms.Add(EndRoom(true));
+        Debug.Log(m_listRooms[m_listRooms.Count - 1].m_roomType);
+        EndRoom();
 
-        DebugDoorPosition();
+        //DebugDoorPosition();
+    }
+
+    private void GoodPath(ref RoomParams p_room)
+    {
+        switch (p_room.m_roomType)
+        {
+            case RoomType.Top:
+                break;
+            case RoomType.Bottom:
+                break;
+            case RoomType.Left:
+                break;
+            case RoomType.Right:
+                break;
+
+            case RoomType.LeftAngleTop: 
+                break;
+            case RoomType.LeftAngleBottom:
+                break;
+            case RoomType.RightAngleTop:
+                break;
+            case RoomType.RightAngleBottom: 
+                break;
+
+            case RoomType.VerticalCorridor: 
+                break;
+            case RoomType.HorizontalCorridor: 
+                break;
+
+            case RoomType.ThreeLeft: 
+                break;
+            case RoomType.ThreeRight: 
+                break;
+            case RoomType.ThreeBottom:
+                break;
+            case RoomType.ThreeTop:
+                break;
+
+            case RoomType.Carrefour:
+                break;
+
+        }
     }
 
     //ROOMS
-    private RoomParams InitRoom(bool p_s, int p_door)
+    private RoomParams InitRoom()
     {
         RoomParams l_r = new RoomParams();
-        l_r.m_isStart = p_s;
+        l_r.m_isStart = true;
         l_r.m_numberOfDoors = 1;
 
         CreateDoors(ref l_r, l_r.m_numberOfDoors);
@@ -49,10 +96,10 @@ public class GenerationRoomGraph : MonoBehaviour
         return l_r;
     }
 
-    private RoomParams EndRoom(bool p_e)
+    private RoomParams EndRoom()
     {
         RoomParams l_r = new RoomParams();
-        l_r.m_isEnd = p_e;
+        l_r.m_isEnd = true;
         l_r.m_numberOfDoors = 1;
 
         CreateDoors(ref l_r, l_r.m_numberOfDoors);
@@ -73,11 +120,13 @@ public class GenerationRoomGraph : MonoBehaviour
         return l_r;
     }
 
+    //DOORS
     private void CreateDoors(ref RoomParams l_roomDoor, int p_door)
     {
         int l_maxDoorNumber = p_door;
 
         List<int> l_listDoorPosition = new List<int>();
+
         for (int i = 0; i <= 3; i++) { l_listDoorPosition.Add(i); }
 
         while (l_maxDoorNumber != 0)
@@ -89,15 +138,19 @@ public class GenerationRoomGraph : MonoBehaviour
             {
                 case 0:
                     l_roomDoor.m_top = true;
+                    l_roomDoor.m_roomType = RoomType.Top;
                     break;
                 case 1:
                     l_roomDoor.m_bot = true;
+                    l_roomDoor.m_roomType = RoomType.Bottom;
                     break;
                 case 2:
                     l_roomDoor.m_left = true;
+                    l_roomDoor.m_roomType = RoomType.Left;
                     break;
                 case 3:
                     l_roomDoor.m_right = true;
+                    l_roomDoor.m_roomType = RoomType.Right;
                     break;
             }
 
@@ -105,21 +158,21 @@ public class GenerationRoomGraph : MonoBehaviour
             l_maxDoorNumber--;
         }
         
-        if (l_roomDoor.m_bot && l_roomDoor.m_top) { l_roomDoor.m_isVerticalCorridor = true; }
-        if (l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_isHorizontalCorridor = true; }
+        if (l_roomDoor.m_bot && l_roomDoor.m_top) { l_roomDoor.m_roomType = RoomType.VerticalCorridor; }
+        if (l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_roomType = RoomType.HorizontalCorridor; }
 
-        if (l_roomDoor.m_bot && l_roomDoor.m_right) { l_roomDoor.m_isRightAngleBot = true; }
-        if (l_roomDoor.m_bot && l_roomDoor.m_left) { l_roomDoor.m_isLeftAngleBot = true; }
+        if (l_roomDoor.m_bot && l_roomDoor.m_right) { l_roomDoor.m_roomType = RoomType.RightAngleBottom; }
+        if (l_roomDoor.m_bot && l_roomDoor.m_left) { l_roomDoor.m_roomType = RoomType.LeftAngleBottom; }
 
-        if (l_roomDoor.m_top && l_roomDoor.m_right) { l_roomDoor.m_isRightAngleTop = true; }
-        if (l_roomDoor.m_top && l_roomDoor.m_left) { l_roomDoor.m_isLeftAngleTop = true; }
+        if (l_roomDoor.m_top && l_roomDoor.m_right) { l_roomDoor.m_roomType = RoomType.RightAngleTop; }
+        if (l_roomDoor.m_top && l_roomDoor.m_left) { l_roomDoor.m_roomType = RoomType.LeftAngleTop; }
 
-        if (l_roomDoor.m_bot && l_roomDoor.m_top && l_roomDoor.m_right) { l_roomDoor.m_isThreeRight = true; }
-        if (l_roomDoor.m_bot && l_roomDoor.m_top && l_roomDoor.m_left) { l_roomDoor.m_isThreeLeft = true; }
-        if (l_roomDoor.m_top && l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_isThreeTop = true; }
-        if (l_roomDoor.m_bot && l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_isThreeBot = true; }
+        if (l_roomDoor.m_bot && l_roomDoor.m_top && l_roomDoor.m_right) { l_roomDoor.m_roomType = RoomType.ThreeRight; }
+        if (l_roomDoor.m_bot && l_roomDoor.m_top && l_roomDoor.m_left) { l_roomDoor.m_roomType = RoomType.ThreeLeft; }
+        if (l_roomDoor.m_top && l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_roomType = RoomType.ThreeTop; }
+        if (l_roomDoor.m_bot && l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_roomType = RoomType.ThreeBottom; }
 
-        if (l_roomDoor.m_bot && l_roomDoor.m_top && l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_isCarrefour = true; }
+        if (l_roomDoor.m_bot && l_roomDoor.m_top && l_roomDoor.m_left && l_roomDoor.m_right) { l_roomDoor.m_roomType = RoomType.Carrefour; }
     }
 
     //OTHER FUNCTIONS
@@ -134,26 +187,7 @@ public class GenerationRoomGraph : MonoBehaviour
     { 
         for (int i = 0; i < m_listRooms.Count; i++)
         {
-            if (m_listRooms[i].m_top) { Debug.Log("Room " + i + " door isTop"); }
-            if (m_listRooms[i].m_bot) { Debug.Log("Room " + i + " door isBot"); }
-            if (m_listRooms[i].m_right) { Debug.Log("Room " + i + " door isLeft"); }
-            if (m_listRooms[i].m_left) { Debug.Log("Room " + i + " door isRight"); }
-
-            if (m_listRooms[i].m_isVerticalCorridor) { Debug.Log("Room " + i + " isVerticalCorridor"); }
-            if (m_listRooms[i].m_isHorizontalCorridor) { Debug.Log("Room " + i + " isHorizontalCorridor"); }
-
-            if (m_listRooms[i].m_isRightAngleBot) { Debug.Log("Room " + i + " isRightAngleBot"); }
-            if (m_listRooms[i].m_isLeftAngleBot) { Debug.Log("Room " + i + " isLeftAngleBot"); }
-
-            if (m_listRooms[i].m_isRightAngleTop) { Debug.Log("Room " + i + " isRightAngleTop"); }
-            if (m_listRooms[i].m_isLeftAngleTop) { Debug.Log("Room " + i + " isLeftAngleTop"); }
-
-            if (m_listRooms[i].m_isThreeRight) { Debug.Log("Room " + i + " isThreeRight"); }
-            if (m_listRooms[i].m_isThreeLeft) { Debug.Log("Room " + i + " isThreeLeft"); }
-            if (m_listRooms[i].m_isThreeTop) { Debug.Log("Room " + i + " isThreeTop"); }
-            if (m_listRooms[i].m_isThreeBot) { Debug.Log("Room " + i + " isThreeBot"); }
-
-            if (m_listRooms[i].m_isCarrefour) { Debug.Log("Room " + i + " isCarrefour"); }
+            Debug.Log(m_listRooms[i].m_roomType);
         }
     }
 }
