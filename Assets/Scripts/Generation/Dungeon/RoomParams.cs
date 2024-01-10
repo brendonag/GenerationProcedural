@@ -13,6 +13,23 @@ public struct RoomParams
     public bool m_left;
     public bool m_right;
 
+
+    public bool m_isLeftAngleTop;
+    public bool m_isRightAngleTop;
+
+    public bool m_isLeftAngleBot;
+    public bool m_isRightAngleBot;
+
+    public bool m_isVerticalCorridor;
+    public bool m_isHorizontalCorridor;
+
+    public bool m_isThreeLeft;
+    public bool m_isThreeRight;
+    public bool m_isThreeTop;
+    public bool m_isThreeBot;
+
+    public bool m_isCarrefour;
+
     public bool m_isStart;
     public bool m_isEnd;
 }
