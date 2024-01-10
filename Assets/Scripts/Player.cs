@@ -235,6 +235,7 @@ public class Player : MonoBehaviour {
             return;
         lastAttackTime = Time.time;
         SetState(STATE.ATTACKING);
+        
     }
 
     /// <summary>
@@ -270,7 +271,30 @@ public class Player : MonoBehaviour {
             }
             EndBlink();
             _blinkCoroutine = StartCoroutine(BlinkCoroutine());
+            if (attack != null && attack.isSlowTrap)
+            {
+                StartCoroutine(SlowDownPlayer(attack.slowDuration, attack.slowFactor));
+            }
         }
+    }
+
+    private IEnumerator SlowDownPlayer(float duration, float factor)
+    {
+        float originalSpeedMax = defaultMovement.speedMax; 
+        defaultMovement.speedMax *= factor;
+
+        yield return new WaitForSeconds(duration);
+
+      
+        defaultMovement.speedMax = originalSpeedMax;
+    }
+    public void ApplySpeedModifier(float factor)
+    {
+        defaultMovement.speedMax *= factor;
+    }
+    public void RemoveSpeedModifier(float factor)
+    {
+        defaultMovement.speedMax /= factor; 
     }
 
     /// <summary>
