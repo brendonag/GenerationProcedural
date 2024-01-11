@@ -9,7 +9,7 @@ public class RandomTrap : MonoBehaviour
     void Start()
     {
         m_trap = GetComponent<Trap>();
-        Random.state = 1 ;
+        //Random.state = 1 ;
         Debug.Log(Random.Range(0,101));
         int l_tempo = Random.Range(0, 7);
 
