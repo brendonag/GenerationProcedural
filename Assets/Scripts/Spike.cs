@@ -14,7 +14,6 @@ public class Spike : MonoBehaviour
 		if(collision.attachedRigidbody.gameObject != Player.Instance.gameObject)
 			return;
 
-		Player.Instance.ApplyHit(null);
+		Player.Instance.ApplyHit(null, 1);
 	}
-
 }

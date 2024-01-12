@@ -22,7 +22,6 @@ public class Room : MonoBehaviour {
     private bool _isInitialized = false;
     public static List<Room> allRooms { get; private set; } = new List<Room>();
 
-
     /// <summary>
     /// Get a list of all doors in a room. Do not use at Awake.
     /// </summary>
@@ -32,6 +31,7 @@ public class Room : MonoBehaviour {
             RefreshDoors();
         }
         return doors;
+
     }
 
     /// <summary>

@@ -76,8 +76,12 @@ public class Enemy : MonoBehaviour
     private STATE _state = STATE.IDLE;
 	private float _stateTimer = 0.0f;
 
-	// Dungeon location
-	private Room _room = null;
+    private float originSpeedMax = 0;
+    private float originFriction = 0;
+    private float originAcceleration = 0;
+
+    // Dungeon location
+    private Room _room = null;
 
 	public static List<Enemy> allEnemies = new List<Enemy>();
 
@@ -189,6 +193,81 @@ public class Enemy : MonoBehaviour
     }
 
 
+    //TRAPS EFFECT
+    public void StunPlayer(float p_duration)
+    {
+        StartCoroutine(TimeStunned(p_duration));
+    }
+
+    public void ChangePlayerSpeed(bool p_isSpeed, float p_duration)
+    {
+        if (p_isSpeed)
+        {
+            defaultMovement.speedMax = 7;
+            defaultMovement.acceleration = 50;
+        }
+        else
+        {
+            defaultMovement.speedMax = 0.25f;
+            defaultMovement.acceleration = 5;
+        }
+
+        StartCoroutine(TimeSpeedChanged(p_duration));
+    }
+
+    public void TpPlayer()
+    {
+        int rnd = Random.Range(1, Room.allRooms.Count);
+
+        _room = Room.allRooms[rnd];
+
+        Bounds currentBounds = _room.GetWorldBounds();
+        Vector3 newPosition = currentBounds.center;
+
+        gameObject.transform.position = newPosition;
+
+        EnterRoom(_room);
+    }
+
+    public void ActiveAlarm(int p_number)
+    {
+        Bounds currentBounds = _room.GetWorldBounds();
+        int i = 0;
+
+        while (i != p_number)
+        {
+            Vector3 newPosition = new Vector3(currentBounds.center.x + i, currentBounds.center.y, currentBounds.center.z);
+            Instantiate(gameObject, newPosition, Quaternion.identity);
+            i++;
+        }
+    }
+
+    //ENUMERATOR EFFECTS
+    private IEnumerator TimeStunned(float p_duration)
+    {
+        SetState(STATE.STUNNED);
+
+        yield return new WaitForSeconds(p_duration);
+
+        SetState(STATE.IDLE);
+    }
+
+    private IEnumerator TimeSpeedChanged(float p_duration)
+    {
+        yield return new WaitForSeconds(p_duration);
+
+        defaultMovement.friction = originFriction;
+        defaultMovement.speedMax = originSpeedMax;
+        defaultMovement.acceleration = originAcceleration;
+    }
+
+    public void EnterRoom(Room room)
+    {
+        Room previous = _room;
+        _room = room;
+        room.OnEnterRoom(previous);
+    }
+
     /// <summary>
     /// Updates velocity and friction
     /// </summary>
@@ -242,13 +321,13 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Called when enemy touches a player attack's hitbox.
     /// </summary>
-    private void ApplyHit(Attack attack)
+    public void ApplyHit(Attack attack, int p_power)
     {
         if (Time.time - _lastHitTime < invincibilityDuration)
             return;
         _lastHitTime = Time.time;
 
-        life -= (attack != null ? attack.damages : 1);
+        life -= (attack != null ? attack.damages : p_power);
         if (life <= 0)
         {
             SetState(STATE.DEAD);
@@ -341,7 +420,7 @@ public class Enemy : MonoBehaviour
         {
             // Collided with hitbox
             Attack attack = collision.gameObject.GetComponent<Attack>();
-            ApplyHit(attack);
+            ApplyHit(attack, 1);
         }
     }
 }
