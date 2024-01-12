@@ -230,12 +230,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}
+      propertyPath: m_end
+      value: 
+      objectReference: {fileID: 5529592525007825181, guid: 46d082fccb584574abe33f23ad6aca8f,
+        type: 3}
+    - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
+        type: 3}
       propertyPath: m_seed
-      value: 0
+      value: 596
       objectReference: {fileID: 0}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}
+      propertyPath: m_start
+      value: 
+      objectReference: {fileID: 1966090451243324894, guid: d42ea1478d615e34b9e5535ad9e32a64,
+        type: 3}
+    - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
+        type: 3}
       propertyPath: m_Hub.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
+        type: 3}
+      propertyPath: m_Rooms.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
@@ -246,8 +263,14 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}
+      propertyPath: m_Rooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 5306103798075177873, guid: c1cdc718fb68ff04092d6c5d0effcec8,
+        type: 3}
+    - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
+        type: 3}
       propertyPath: m_levels.Array.data[0].m_nRoom
-      value: 20
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}
