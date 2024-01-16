@@ -22,6 +22,8 @@ public class RunGenerateDungeon : MonoBehaviour
     List<Vector2> m_bRoomsTop = new List<Vector2>();
     List<Vector2> m_bRoomsBottom = new List<Vector2>();
 
+    [SerializeField] private GameObject m_Player;
+
     private void Awake()
     {
         //m_map = new bool[GameManager.instance.Levels[0].Room * 2, GameManager.instance.Levels[0].Room * 2];
@@ -372,7 +374,8 @@ public class RunGenerateDungeon : MonoBehaviour
             if(l_room.Value.m_start)
             {
                 l_roomObject = Instantiate(GameManager.instance.m_start,
-                new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);              
+                new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);    
+                l_roomObject.GetComponent<Room>().isStartRoom = true;
             }
             else if(l_room.Value.m_end)
             {
@@ -387,6 +390,7 @@ public class RunGenerateDungeon : MonoBehaviour
 
             l_roomObject.GetComponent<Room>().position = new Vector2Int((int)l_room.Key.x, (int)l_room.Key.y);
         }
+        Instantiate(m_Player,Vector3.zero, Quaternion.identity);
 
     }
 
