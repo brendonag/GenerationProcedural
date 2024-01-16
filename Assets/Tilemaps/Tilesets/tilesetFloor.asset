@@ -107,7 +107,7 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
       offsetMode: 0
       showTileWithPrefab: 1
-      showPrefabPreviewInTilePalette: 0
+      showPrefabPreviewInTilePalette: 1
     autilingGroup: 1
   - uv:
       serializedVersion: 2
