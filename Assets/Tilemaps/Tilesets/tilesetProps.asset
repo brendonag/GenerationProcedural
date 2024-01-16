@@ -16,7 +16,7 @@ MonoBehaviour:
   TilePxSize: {x: 32, y: 32}
   SliceOffset: {x: 0, y: 0}
   SlicePadding: {x: 0, y: 0}
-  BackgroundColor: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 0.8039216}
+  BackgroundColor: {r: 0.8039216, g: 0.8039216, b: 0.8039216, a: 0.8039216}
   VisualTileSize: {x: 32, y: 32}
   VisualTilePadding: 1
   TileRowLength: 8
@@ -97,13 +97,12 @@ MonoBehaviour:
     paramContainer:
       m_paramList: []
     prefabData:
-      prefab: {fileID: 7725945197443063864, guid: 36f2086a0fa8e2d4d893dd9733b2ba88,
-        type: 3}
+      prefab: {fileID: 0}
       offset: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
       offsetMode: 0
       showTileWithPrefab: 0
-      showPrefabPreviewInTilePalette: 1
+      showPrefabPreviewInTilePalette: 0
     autilingGroup: 0
   - uv:
       serializedVersion: 2
