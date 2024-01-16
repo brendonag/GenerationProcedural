@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Trap : MonoBehaviour
 {
@@ -8,7 +9,15 @@ public class Trap : MonoBehaviour
 
     public TrapType Type { get { return m_type; } set { m_type = value; } }
 
-    private Enemy m_enemy;
+    public GameObject _enemyPrefab;
+
+    [SerializeField] private Sprite _bo01;
+    [SerializeField] private Sprite _bo02;
+
+    private void Start()
+    {
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,40 +46,64 @@ public class Trap : MonoBehaviour
                     Player.Instance.TpPlayer();
                     break;
                 case TrapType.ALARME:
-                    Player.Instance.ActiveAlarm(1);
+                    Player.Instance.ActiveAlarm(CreatePrefab(1));
+                    break;
+                case TrapType.STRAIGHT:
+                    Player.Instance.GoStraightAhead(1);
+                    break;
+                case TrapType.BLACKOUT:
+                    Player.Instance.GoBlackout(_bo02, 3);
                     break;
             }
         }
 
         if (collision.attachedRigidbody.gameObject.CompareTag("Enemy"))
-        { 
-            /*
-            Enemy en = collision.GetComponent<Enemy>();
-            Debug.Log(en);**/
-            /*
+        {
+            GameObject obj = collision.attachedRigidbody.gameObject;
+            Enemy enemy = obj.GetComponent<Enemy>();
+
             switch (Type)
             {
                 case TrapType.MINE:
-                    m_enemy.ApplyHit(null, 2);
+                    enemy.ApplyHit(null, 2);
                     break;
                 case TrapType.PARA:
-                    m_enemy.StunPlayer(1);
+                    enemy.StunPlayer(1);
+                    break;
+                case TrapType.REVERSECONTROL:
+                    enemy.ConfusePlayer(1);
                     break;
                 case TrapType.SLOW:
-                    m_enemy.ChangePlayerSpeed(false, 1);
+                    enemy.ChangePlayerSpeed(false, 1);
                     break;
                 case TrapType.SPEED:
-                    m_enemy.ChangePlayerSpeed(true, 1);
+                    enemy.ChangePlayerSpeed(true, 1);
                     break;
                 case TrapType.TP:
-                    m_enemy.TpPlayer();
+                    enemy.TpPlayer();
                     break;
                 case TrapType.ALARME:
-                    m_enemy.ActiveAlarm(1);
+                    enemy.ActiveAlarm(CreatePrefab(1));
+                    break;
+                case TrapType.STRAIGHT:
+                    enemy.GoStraightAhead(1);
+                    break;
+                case TrapType.BLACKOUT:
+                    Player.Instance.GoBlackout(_bo02, 3);
                     break;
             }
-            */
         }
-        
+    }
+
+    private List<GameObject> CreatePrefab(int max)
+    {
+        List<GameObject> list = new List<GameObject>();
+
+        for(int i = 0; i < max; i++)
+        {
+            GameObject obj = Instantiate(_enemyPrefab, Vector3.zero, Quaternion.identity);
+            list.Add(obj);
+        }
+        return list;
     }
 }

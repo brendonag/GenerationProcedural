@@ -90,7 +90,8 @@ public class Player : MonoBehaviour {
 	private Room _room = null;
 	public Room Room { get { return _room; } }
 
-    public GameObject _enemyPrefab;
+    public SpriteRenderer _blackout;
+
 
 	private void Awake () {
         Instance = this;
@@ -105,6 +106,8 @@ public class Player : MonoBehaviour {
         originAcceleration = defaultMovement.acceleration;
         originSpeedMax = defaultMovement.speedMax;
         originFriction = defaultMovement.friction;
+
+        _blackout.color = new Vector4(1, 1, 1, 0);
     }
 
     private void Update () {
@@ -230,12 +233,10 @@ public class Player : MonoBehaviour {
     {
         StartCoroutine(TimeStunned(p_duration));
     }
-
     public void ConfusePlayer(float p_duration)
     {
         StartCoroutine(TimeConfused(p_duration));
     }
-
     public void ChangePlayerSpeed(bool p_isSpeed, float p_duration)
     {
         if (p_isSpeed)
@@ -251,7 +252,6 @@ public class Player : MonoBehaviour {
 
         StartCoroutine(TimeSpeedChanged(p_duration));
     }
-
     public void TpPlayer()
     {
         int rnd = Random.Range(1, Room.allRooms.Count);
@@ -260,24 +260,29 @@ public class Player : MonoBehaviour {
 
         Bounds currentBounds = _room.GetWorldBounds();
         Vector3 newPosition = currentBounds.center;
-        
+
         gameObject.transform.position = newPosition;
 
         EnterRoom(_room);
     }
-
-    public void ActiveAlarm(int p_number)
+    public void ActiveAlarm(List<GameObject> p_list)
     {
         Bounds currentBounds = _room.GetWorldBounds();
-        int i = 0;
 
-        while(i != p_number)
-        { 
+        for(int i =0; i < p_list.Count; i++)
+        {
             Vector3 newPosition = new Vector3(currentBounds.center.x + i, currentBounds.center.y, currentBounds.center.z);
-            Instantiate(_enemyPrefab, newPosition, Quaternion.identity);
-            i++;
+            p_list[i].transform.position = newPosition;
         }
-        
+    }
+    public void GoStraightAhead(float p_duration)
+    {
+        StartCoroutine(TimeStraightAhead(p_duration));
+    }
+    public void GoBlackout(Sprite sprite, float p_duration)
+    {
+        _blackout.sprite = sprite;
+        StartCoroutine(TimeBlackout(_blackout, p_duration));
     }
 
     //ENUMERATOR EFFECTS
@@ -289,7 +294,6 @@ public class Player : MonoBehaviour {
 
         SetState(STATE.IDLE);
     }
-
     private IEnumerator TimeConfused(float p_duration)
     {
         _coefInverse = -1;
@@ -306,7 +310,40 @@ public class Player : MonoBehaviour {
         defaultMovement.speedMax = originSpeedMax;
         defaultMovement.acceleration = originAcceleration;
     }
+    private IEnumerator TimeStraightAhead(float p_duration)
+    {
+        _body.AddForce(transform.right * 500);
 
+        SetState(STATE.STUNNED);
+        yield return new WaitForSeconds(p_duration);
+
+        SetState(STATE.IDLE);
+    }
+    IEnumerator TimeBlackout(SpriteRenderer sprite, float p_duration)
+    {
+        // Fade In
+        yield return Fade(sprite, 0f, 1f, 1);
+
+        yield return new WaitForSeconds(p_duration);
+
+        // Fade Out
+        yield return Fade(sprite, 1f, 0f, 1);
+    }
+    IEnumerator Fade(SpriteRenderer sprite, float startAlpha, float targetAlpha, float duration)
+    {
+        float elapsedTime = 0f;
+        Color startColor = sprite.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+
+        while (elapsedTime < duration)
+        {
+            sprite.color = Color.Lerp(startColor, targetColor, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        sprite.color = targetColor;
+    }
 
     //FIXED UPDATE
     /// <summary>

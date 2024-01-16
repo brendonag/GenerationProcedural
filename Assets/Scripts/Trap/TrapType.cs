@@ -10,5 +10,7 @@ public enum TrapType
     PARA,
     REVERSECONTROL,
     SLOW,
-    SPEED
+    SPEED,
+    STRAIGHT,
+    BLACKOUT
 }

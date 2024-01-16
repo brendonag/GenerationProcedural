@@ -49,12 +49,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damages: 1
   hasInfiniteLifetime: 0
-  duration: 0.15
+  lifetime: 0.3
   knockbackSpeed: 3
   knockbackDuration: 0.5
   destroyOnHit:
     serializedVersion: 2
     m_Bits: 0
+  isSlowTrap: 0
+  slowDuration: 0
+  slowFactor: 0
 --- !u!61 &2185964762067344108
 BoxCollider2D:
   m_ObjectHideFlags: 0
