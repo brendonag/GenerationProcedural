@@ -10,7 +10,7 @@ public class RandomTrap : MonoBehaviour
     {
         m_trap = GetComponent<Trap>();
         //Random.state = 1 ;
-        Debug.Log(Random.Range(0,101));
+        //Debug.Log(Random.Range(0,101));
         int l_tempo = Random.Range(0, 7);
 
         switch(l_tempo)
@@ -23,6 +23,5 @@ public class RandomTrap : MonoBehaviour
             case 5: m_trap.Type = TrapType.SLOW; break;
             case 6: m_trap.Type = TrapType.SPEED; break;
         }
-        
     }
 }
