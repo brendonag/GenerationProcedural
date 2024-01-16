@@ -38,8 +38,6 @@ public class RunGenerateDungeon : MonoBehaviour
 
     void Start()
     {
-        m_Rooms.Add(Instantiate(GameManager.instance.m_start,m_position, Quaternion.identity));
-
         Rooms l_start = new Rooms();
         l_start.m_start = true;
         m_mapPosition.Add(m_position,l_start);
@@ -59,7 +57,6 @@ public class RunGenerateDungeon : MonoBehaviour
                     for (int y = 0; y < 2; y++)
                     {
                         m_position += Vector2.right;
-                        //m_Rooms.Add(Instantiate(GameManager.instance.m_start, m_position, Quaternion.identity));
 
                         Rooms l_room = new Rooms();
                         if(y == 0)
@@ -75,7 +72,6 @@ public class RunGenerateDungeon : MonoBehaviour
                     for (int y = 0; y < 2; y++)
                     {
                         m_position += Vector2.down;
-                        //m_Rooms.Add(Instantiate(GameManager.instance.m_start, m_position, Quaternion.identity));
 
                         Rooms l_room = new Rooms();
                         if (y == 0)
@@ -91,7 +87,6 @@ public class RunGenerateDungeon : MonoBehaviour
                     for (int y = 0; y < 2; y++)
                     {
                         m_position += Vector2.left;
-                        //m_Rooms.Add(Instantiate(GameManager.instance.m_start, m_position, Quaternion.identity));
 
                         Rooms l_room = new Rooms();
                         if (y == 0)
@@ -107,7 +102,6 @@ public class RunGenerateDungeon : MonoBehaviour
                     for (int y = 0; y < 2; y++)
                     {
                         m_position += Vector2.up;
-                        //m_Rooms.Add(Instantiate(GameManager.instance.m_start, m_position, Quaternion.identity));
 
                         Rooms l_room = new Rooms();
                         if (y == 0)
@@ -127,12 +121,12 @@ public class RunGenerateDungeon : MonoBehaviour
             }
         }
 
-        GenerateRoom(GameManager.instance.m_end);
+        GenerateRoom(GameManager.instance.m_end, true);
 
         SpawnDungeon();
     }
 
-    private void GenerateRoom(GameObject p_room)
+    private void GenerateRoom(GameObject p_room, bool p_end = false)
     {
         int l_random = 0;
         bool l_spawn = false;
@@ -157,8 +151,8 @@ public class RunGenerateDungeon : MonoBehaviour
                 case 3: l_position += Vector3.up ; break;
             }
 
-            Rooms l_tempo = new Rooms();
-            if (m_mapPosition.TryGetValue(l_position, out l_tempo))
+            Rooms l_tempoHere = new Rooms();
+            if (m_mapPosition.TryGetValue(l_position, out l_tempoHere))
             {
                 l_spawn = false;
                 l_position = m_position;
@@ -168,8 +162,14 @@ public class RunGenerateDungeon : MonoBehaviour
 
         m_last = (l_random + 2) % 4;
         m_position = l_position;
-        //m_Rooms.Add(Instantiate(p_room, m_position, Quaternion.identity));
-        m_mapPosition.Add(m_position, new Rooms());
+        Rooms l_tempo = new Rooms();
+
+        if(p_end == true)
+        {
+            l_tempo.m_end = true;
+        }
+
+        m_mapPosition.Add(m_position, l_tempo);
         switch (m_last)
         {
             case 2: 
@@ -217,7 +217,6 @@ public class RunGenerateDungeon : MonoBehaviour
                 break;
         }
 
-
         bool l_top = false;
         bool l_bottom = false;
         bool l_left = false;
@@ -226,37 +225,17 @@ public class RunGenerateDungeon : MonoBehaviour
 
         for(int i = 0;i<l_Dir.Length;i++)
         {
-            Rooms l_tempo = new Rooms();
+            Rooms l_tempoHere = new Rooms();
             switch(i)
             {
-                case 0: l_bottom = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
-                case 1: l_top = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
-                case 2: l_right = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
-                case 3: l_left = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
+                case 0: l_bottom = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
+                case 1: l_top = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
+                case 2: l_right = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
+                case 3: l_left = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
             }
            
         }
-        /*
-        if (m_map[GameManager.instance.Levels[0].Room + (int)m_position.x, GameManager.instance.Levels[0].Room + (int)m_position.y + 1] == true)
-        {
-            l_top = true;
-        }
 
-        if (m_map[GameManager.instance.Levels[0].Room + (int)m_position.x, GameManager.instance.Levels[0].Room + (int)m_position.y - 1] == true)
-        {
-            l_bottom = true;
-        }
-
-        if (m_map[GameManager.instance.Levels[0].Room + (int)m_position.x + 1, GameManager.instance.Levels[0].Room + (int)m_position.y ] == true)
-        {
-            l_right = true;
-        }
-
-        if (m_map[GameManager.instance.Levels[0].Room + (int)m_position.x - 1, GameManager.instance.Levels[0].Room + (int)m_position.y] == true)
-        {
-            l_left = true;
-        }
-        */
         if (l_top && l_bottom && l_left && l_right)
         {
             m_last = -1;
@@ -305,7 +284,6 @@ public class RunGenerateDungeon : MonoBehaviour
 
         m_last = (l_random + 2) % 4;
         m_position = l_position;
-        //m_Rooms.Add(Instantiate(p_room, m_position, Quaternion.identity));
         m_mapPosition.Add(m_position, new Rooms());
 
         switch ((p_deleteDir+2)%4)
@@ -390,9 +368,24 @@ public class RunGenerateDungeon : MonoBehaviour
     {
         foreach(var l_room in m_mapPosition)
         {
-            Instantiate(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)], 
-                new Vector3(l_room.Key.x * 10, l_room.Key.y * 8, 0), Quaternion.identity);
+            GameObject l_roomObject;
+            if(l_room.Value.m_start)
+            {
+                l_roomObject = Instantiate(GameManager.instance.m_start,
+                new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);              
+            }
+            else if(l_room.Value.m_end)
+            {
+                l_roomObject = Instantiate(GameManager.instance.m_end,
+                new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);
+            }
+            else
+            {
+                l_roomObject = Instantiate(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)],
+                new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);
+            }
 
+            l_roomObject.GetComponent<Room>().position = new Vector2Int((int)l_room.Key.x, (int)l_room.Key.y);
         }
 
     }
