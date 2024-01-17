@@ -267,6 +267,8 @@ MonoBehaviour:
   attackCooldown: 0.3
   orientation: 1
   controllerDeadZone: 0.3
+  m_objBlackOut: {fileID: 216153142870372327, guid: d46cb141785fdfe4fb1ca0a7c445b553,
+    type: 3}
   _blackout: {fileID: 0}
 --- !u!210 &3061304262239656673
 SortingGroup:
