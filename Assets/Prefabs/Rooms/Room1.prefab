@@ -142,7 +142,7 @@ MonoBehaviour:
   m_tilemaps:
   - {fileID: 1426011269217010653}
   - {fileID: 5446873782366247807}
-  m_selectedIndex: 0
+  m_selectedIndex: 1
   m_unselectedColorMultiplier: 1
   m_defaultTilemapWindowVisible: 0
   m_displayTilemapRList: 1
@@ -813,7 +813,7 @@ PrefabInstance:
     - target: {fileID: 6854607139916642931, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
         type: 3}
       propertyPath: m_type
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8226526555017733826, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
         type: 3}
@@ -1139,6 +1139,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6854607139916642931, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
+        type: 3}
+      propertyPath: m_type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226526555017733826, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8226526555017733826, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
         type: 3}
       propertyPath: easyTraps.Array.data[1]
@@ -1377,6 +1387,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6854607139916642931, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
+        type: 3}
+      propertyPath: m_type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226526555017733826, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8226526555017733826, guid: 6f079a2a2adb4604db9f9a91a4ec0bc2,
         type: 3}

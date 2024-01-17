@@ -50,7 +50,7 @@ public class RandomTrap : MonoBehaviour
     {
         m_trap = GetComponent<Trap>();
 
-        _difficulty = GameManager.instance.Levels[0].Dificulty;
+        //_difficulty = GameManager.instance.Levels[0].Dificulty;
         AdaptDifficulty(1);
 
     }
@@ -97,7 +97,7 @@ public class RandomTrap : MonoBehaviour
         float pSl = 0.2f;
         float pPa = 0.2f;
 
-        float l_rand = GameManager.instance.m_Random.Next(0, 1);
+        float l_rand = Random.Range(0.0f, 1.0f);// GameManager.instance.m_Random.Next(0, 1);
 
         if(l_rand < pMi) { m_trap.Type = TrapType.MINE; }
         else if(l_rand < pMi + pTp) { m_trap.Type = TrapType.TP; }
@@ -129,7 +129,7 @@ public class RandomTrap : MonoBehaviour
         float pSp = 0.1f;
         float pBl = 0.2f;
 
-        float l_rand = GameManager.instance.m_Random.Next(0, 1);
+        float l_rand = Random.Range(0.0f, 1.0f); //GameManager.instance.m_Random.Next(0, 1);
 
         if (l_rand < pMi) { m_trap.Type = TrapType.MINE; }
         else if (l_rand < pMi + pTp) { m_trap.Type = TrapType.TP; }
@@ -165,7 +165,7 @@ public class RandomTrap : MonoBehaviour
         float pBl = 0.1f;
         float pSt = 0.2f;
 
-        float l_rand = GameManager.instance.m_Random.Next(0, 1);
+        float l_rand = Random.Range(0.0f, 1.0f); //GameManager.instance.m_Random.Next(0, 1);
 
         if (l_rand < pMi) { m_trap.Type = TrapType.MINE; }
         else if (l_rand < pMi + pTp) { m_trap.Type = TrapType.TP; }
