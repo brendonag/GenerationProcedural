@@ -90,14 +90,14 @@ public class RandomTrap : MonoBehaviour
         PARA
         */
 
-        float pMi = 0.2f;
-        float pTp = 0.1f;
-        float pAl = 0.2f;
-        float pRe = 0.1f;
-        float pSl = 0.2f;
-        float pPa = 0.2f;
+        int pMi = 20;
+        int pTp = 10;
+        int pAl = 20;
+        int pRe = 10;
+        int pSl = 20;
+        int pPa = 20;
 
-        float l_rand = GameManager.instance.m_Random.Next(0, 1);
+        int l_rand = GameManager.instance.m_Random.Next(0, 100);
 
         if(l_rand < pMi) { m_trap.Type = TrapType.MINE; }
         else if(l_rand < pMi + pTp) { m_trap.Type = TrapType.TP; }
@@ -120,16 +120,16 @@ public class RandomTrap : MonoBehaviour
         BLACKOUT
         */
 
-        float pMi = 0.1f;
-        float pTp = 0.2f;
-        float pAl = 0.1f;
-        float pRe = 0.1f;
-        float pSl = 0.1f;
-        float pPa = 0.1f;
-        float pSp = 0.1f;
-        float pBl = 0.2f;
+        int pMi = 10;
+        int pTp = 20;
+        int pAl = 10;
+        int pRe = 10;
+        int pSl = 10;
+        int pPa = 10;
+        int pSp = 10;
+        int pBl = 10;
 
-        float l_rand = GameManager.instance.m_Random.Next(0, 1);
+        int l_rand = GameManager.instance.m_Random.Next(0, 100);
 
         if (l_rand < pMi) { m_trap.Type = TrapType.MINE; }
         else if (l_rand < pMi + pTp) { m_trap.Type = TrapType.TP; }
@@ -155,17 +155,17 @@ public class RandomTrap : MonoBehaviour
         STRAIGHT
         */
 
-        float pMi = 0.1f;
-        float pTp = 0.1f;
-        float pAl = 0.1f;
-        float pRe = 0.1f;
-        float pSl = 0.1f;
-        float pPa = 0.1f;
-        float pSp = 0.1f;
-        float pBl = 0.1f;
-        float pSt = 0.2f;
+        int pMi = 10;
+        int pTp = 10;
+        int pAl = 10;
+        int pRe = 10;
+        int pSl = 10;
+        int pPa = 10;
+        int pSp = 10;
+        int pBl = 10;
+        int pSt = 20;
 
-        float l_rand = GameManager.instance.m_Random.Next(0, 1);
+        int l_rand = GameManager.instance.m_Random.Next(0, 100);
 
         if (l_rand < pMi) { m_trap.Type = TrapType.MINE; }
         else if (l_rand < pMi + pTp) { m_trap.Type = TrapType.TP; }

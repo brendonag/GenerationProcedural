@@ -89,7 +89,7 @@ public class Player : MonoBehaviour {
 	// Dungeon position
 	private Room _room = null;
 	public Room Room { get { return _room; } }
-
+    public GameObject m_objBlackOut;
     public SpriteRenderer _blackout;
 
 
@@ -97,6 +97,8 @@ public class Player : MonoBehaviour {
         Instance = this;
         _body = GetComponent<Rigidbody2D>();
         GetComponentsInChildren<SpriteRenderer>(true, _spriteRenderers);
+        _blackout = Instantiate(m_objBlackOut, Vector3.zero, Quaternion.identity).GetComponent<SpriteRenderer>();
+        _blackout.gameObject.GetComponent<BlackOut_Following>().m_player = gameObject;
     }
 
     private void Start()
