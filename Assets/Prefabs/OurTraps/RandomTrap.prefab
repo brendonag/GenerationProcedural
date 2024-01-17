@@ -42,11 +42,37 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8404445405975435403}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0fed42c2bd3a2345b8e79168a21b257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  easyTraps:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  mediumTraps:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  hardTraps:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &6854607139916642931
 MonoBehaviour:
   m_ObjectHideFlags: 0
