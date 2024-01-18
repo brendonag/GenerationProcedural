@@ -14,10 +14,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelManager[] m_levels;
     public LevelManager[] Levels { get { return m_levels; } }
 
+
     [Header("Room")]
     public GameObject m_start;
     public List<GameObject> m_Rooms;
     public GameObject m_end;
+    public GameObject m_roomKey;
 
     private bool m_isMegaTrap = false;
     public bool IsMegaTrap { get { return m_isMegaTrap; } set { m_isMegaTrap = value; } }
@@ -39,7 +41,18 @@ public class GameManager : MonoBehaviour
         { 
             m_seed = Random.Range(int.MinValue,int.MaxValue);
         }
-        m_Random = new System.Random(m_seed);        
+        m_Random = new System.Random(m_seed);
+
+        for(int i = 0; i < m_levels.Length; i++)
+        {
+            m_levels[i].m_ObjLevel = new GameObject();
+            if(i>0)
+            {
+                m_levels[i].m_ObjLevel.SetActive(false);
+            }
+        }
+
+
     }
 
     private void Start()

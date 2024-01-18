@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public struct LevelManager 
 {
+    public GameObject m_ObjLevel ;
     [SerializeField] private int m_nRoom;
     [SerializeField] private List<Branche> m_nBranche;
     [SerializeField] private int m_dificulty;
@@ -32,6 +33,7 @@ public struct Rooms
     public bool m_lockE;
     public bool m_start;
     public bool m_end;
+    public bool m_endB;
     public Vector2 m_position;
 
 }

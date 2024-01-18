@@ -10,7 +10,7 @@ public class RunGenerateDungeon : MonoBehaviour
 
     private List<GameObject> m_Rooms = new List<GameObject>();
     //[SerializeField]public bool[,] m_map;
-    [SerializeField] private Dictionary<Vector2,Rooms> m_mapPosition = new Dictionary<Vector2, Rooms>();
+    [SerializeField] private List<Dictionary<Vector2,Rooms>> m_mapPosition = new List<Dictionary<Vector2, Rooms>>();
 
     List<Vector2> m_roomsLeft = new List<Vector2>();
     List<Vector2> m_roomsRight = new List<Vector2>();
@@ -40,8 +40,41 @@ public class RunGenerateDungeon : MonoBehaviour
 
     void Start()
     {
-        Generate();
-        Instantiate(m_Player, Vector3.zero, Quaternion.identity);
+        for (int i = 0; i < GameManager.instance.Levels.Length; i++)
+        {
+            GameManager.instance.SetDifficulty(i);
+            m_mapPosition.Add(new Dictionary<Vector2, Rooms>());
+            Generate();
+            
+            if(i == 0)
+            {
+                Instantiate(m_Player, Vector3.zero, Quaternion.identity);
+            }
+
+            m_roomsTop.Clear();
+            m_roomsRight.Clear();
+            m_roomsBottom.Clear();
+            m_roomsLeft.Clear();
+
+            m_bRoomsTop.Clear();
+            m_bRoomsRight.Clear();
+            m_bRoomsBottom.Clear();
+            m_bRoomsLeft.Clear();
+
+            m_roomsTop.Add(Vector3.zero);
+            m_roomsRight.Add(Vector3.zero);
+            m_roomsBottom.Add(Vector3.zero);
+            m_roomsLeft.Add(Vector3.zero);
+
+            m_bRoomsTop.Add(Vector3.zero);
+            m_bRoomsRight.Add(Vector3.zero);
+            m_bRoomsBottom.Add(Vector3.zero);
+            m_bRoomsLeft.Add(Vector3.zero);
+
+            m_position = Vector2.zero;
+        }
+       
+        
     }
 
     private void GenerateRoom(GameObject p_room, bool p_end = false)
@@ -70,7 +103,7 @@ public class RunGenerateDungeon : MonoBehaviour
             }
 
             Rooms l_tempoHere = new Rooms();
-            if (m_mapPosition.TryGetValue(l_position, out l_tempoHere))
+            if (m_mapPosition[GameManager.instance.Difficulty-1].TryGetValue(l_position, out l_tempoHere))
             {
                 l_spawn = false;
                 l_position = m_position;
@@ -87,7 +120,7 @@ public class RunGenerateDungeon : MonoBehaviour
             l_tempo.m_end = true;
         }
 
-        m_mapPosition.Add(m_position, l_tempo);
+        m_mapPosition[GameManager.instance.Difficulty - 1].Add(m_position, l_tempo);
         switch (m_last)
         {
             case 2: 
@@ -146,10 +179,10 @@ public class RunGenerateDungeon : MonoBehaviour
             Rooms l_tempoHere = new Rooms();
             switch(i)
             {
-                case 0: l_bottom = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
-                case 1: l_top = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
-                case 2: l_right = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
-                case 3: l_left = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
+                case 0: l_bottom = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
+                case 1: l_top = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
+                case 2: l_right = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
+                case 3: l_left = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempoHere); break;
             }
            
         }
@@ -167,7 +200,7 @@ public class RunGenerateDungeon : MonoBehaviour
         } 
     }
 
-    private void GenerateBranche(GameObject p_room,int p_deleteDir)
+    private void GenerateBranche(GameObject p_room,int p_deleteDir, bool p_end = false)
     {
         int l_random = 0;
         bool l_spawn = false;
@@ -193,7 +226,7 @@ public class RunGenerateDungeon : MonoBehaviour
             }
 
             Rooms l_tempo = new Rooms();
-            if (m_mapPosition.TryGetValue(l_position, out l_tempo))
+            if (m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(l_position, out l_tempo))
             {
                 l_spawn = false;
                 l_position = m_position;
@@ -202,7 +235,12 @@ public class RunGenerateDungeon : MonoBehaviour
 
         m_last = (l_random + 2) % 4;
         m_position = l_position;
-        m_mapPosition.Add(m_position, new Rooms());
+        Rooms l_tempoS = new Rooms();
+        if (p_end == true)
+        {
+            l_tempoS.m_endB = true;
+        }
+        m_mapPosition[GameManager.instance.Difficulty - 1].Add(m_position,l_tempoS) ;
 
         switch ((p_deleteDir+2)%4)
         {
@@ -262,10 +300,10 @@ public class RunGenerateDungeon : MonoBehaviour
             Rooms l_tempo = new Rooms();
             switch (i)
             {
-                case 0: l_bottom = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
-                case 1: l_top = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
-                case 2: l_right = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
-                case 3: l_left = m_mapPosition.TryGetValue(m_position + l_Dir[i], out l_tempo); break;
+                case 0: l_bottom = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempo); break;
+                case 1: l_top = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempo); break;
+                case 2: l_right = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempo); break;
+                case 3: l_left = m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position + l_Dir[i], out l_tempo); break;
             }
 
         }
@@ -284,7 +322,7 @@ public class RunGenerateDungeon : MonoBehaviour
 
     private void SpawnDungeon()
     {
-        foreach(var l_room in m_mapPosition)
+        foreach(var l_room in m_mapPosition[GameManager.instance.Difficulty-1])
         {
             GameObject l_roomObject;
             if(l_room.Value.m_start)
@@ -298,6 +336,11 @@ public class RunGenerateDungeon : MonoBehaviour
                 l_roomObject = Instantiate(GameManager.instance.m_end,
                 new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);
             }
+            else if(l_room.Value.m_endB)
+            {
+                l_roomObject = Instantiate(GameManager.instance.m_roomKey,
+                new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);
+            }
             else
             {
                 l_roomObject = Instantiate(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)],
@@ -305,6 +348,7 @@ public class RunGenerateDungeon : MonoBehaviour
             }
 
             l_roomObject.GetComponent<Room>().position = new Vector2Int((int)l_room.Key.x, (int)l_room.Key.y);
+            l_roomObject.transform.SetParent(GameManager.instance.Levels[GameManager.instance.Difficulty-1].m_ObjLevel.transform);
 
 
             Vector2[] l_Dir = { Vector2.down, Vector2.up, Vector2.right, Vector2.left };
@@ -333,7 +377,7 @@ public class RunGenerateDungeon : MonoBehaviour
                 switch (i)
                 {
                     case 0: 
-                        if(!m_mapPosition.TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
+                        if(!m_mapPosition[GameManager.instance.Difficulty - 1] .TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
                         {
                             l_roomObject.GetComponent<Room>().GetDoor(Utils.ORIENTATION.SOUTH, l_roomObject.transform.position).SetState(Door.STATE.WALL);       
                         }
@@ -341,7 +385,7 @@ public class RunGenerateDungeon : MonoBehaviour
                         break;
 
                     case 1:
-                        if (!m_mapPosition.TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
+                        if (!m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
                         {
                            l_roomObject.GetComponent<Room>().GetDoor(Utils.ORIENTATION.NORTH, l_roomObject.transform.position).SetState(Door.STATE.WALL);
                         }
@@ -349,7 +393,7 @@ public class RunGenerateDungeon : MonoBehaviour
                         break;
 
                     case 2:
-                        if (!m_mapPosition.TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
+                        if (!m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
                         {
                            l_roomObject.GetComponent<Room>().GetDoor(Utils.ORIENTATION.EAST, l_roomObject.transform.position).SetState(Door.STATE.WALL);
                         }
@@ -357,7 +401,7 @@ public class RunGenerateDungeon : MonoBehaviour
                         break;
 
                     case 3:
-                        if (!m_mapPosition.TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
+                        if (!m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(l_room.Key + l_Dir[i], out l_tempo))
                         {
                             l_roomObject.GetComponent<Room>().GetDoor(Utils.ORIENTATION.WEST, l_roomObject.transform.position).SetState(Door.STATE.WALL);
                         }
@@ -375,68 +419,70 @@ public class RunGenerateDungeon : MonoBehaviour
     {
         Rooms l_start = new Rooms();
         l_start.m_start = true;
-        m_mapPosition.Add(m_position, l_start);
+        m_mapPosition[GameManager.instance.Difficulty-1].Add(m_position, l_start);
 
-        for (int i = 1; i < GameManager.instance.Levels[0].Room - 1; i++)
+        for (int i = 1; i < GameManager.instance.Levels[GameManager.instance.Difficulty - 1].Room - 1; i++)
         {
             GenerateRoom(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)]);
         }
 
+        int l_startB = GameManager.instance.m_Random.Next(0, 4);
 
-        for (int i = 0; i < GameManager.instance.Levels[0].NBranche.Count; i++)
+        for (int i = l_startB; i < GameManager.instance.Levels[GameManager.instance.Difficulty - 1].NBranche.Count + l_startB; i++)
         {
             Rooms l_tempo = new Rooms();
             switch (i % 4)
             {
                 case 0:
                     m_position = m_roomsRight[GameManager.instance.m_Random.Next(0, m_roomsRight.Count)];
-                    if(m_mapPosition.TryGetValue(m_position,out l_tempo))
+
+                    if(m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position,out l_tempo) && i!=l_startB)
                     {
                         l_tempo.m_lockE = true;
-                        m_mapPosition[m_position] = l_tempo;
+                        m_mapPosition[GameManager.instance.Difficulty - 1][m_position] = l_tempo;
                     }
                     for (int y = 0; y < 2; y++)
                     {
                         m_position += Vector2.right;
 
                         Rooms l_room = new Rooms();
-                        if (y == 0)
+                        if (y == 0 && i != l_startB)
                         {
                             l_room.m_lock = true;
                             l_room.m_lockO = true;
                         }
-                        m_mapPosition.Add(m_position, l_room);
+                        m_mapPosition[GameManager.instance.Difficulty - 1].Add(m_position, l_room);
                     }
                     break;
 
                 case 1:
                     m_position = m_roomsBottom[GameManager.instance.m_Random.Next(0, m_roomsBottom.Count)];
-                    if (m_mapPosition.TryGetValue(m_position, out l_tempo))
+                    if (m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position, out l_tempo) && i != l_startB)
                     {
                         l_tempo.m_lockS = true;
-                        m_mapPosition[m_position] = l_tempo;
+                        m_mapPosition[GameManager.instance.Difficulty - 1][m_position] = l_tempo;
                     }
                     for (int y = 0; y < 2; y++)
                     {
                         m_position += Vector2.down;
 
                         Rooms l_room = new Rooms();
-                        if (y == 0)
+                        if (y == 0 && i != l_startB)
                         {
                             l_room.m_lock = true;
                             l_room.m_lockN = true;
                         }
-                        m_mapPosition.Add(m_position, l_room);
+                        m_mapPosition[GameManager.instance.Difficulty - 1].Add(m_position, l_room);
                     }
                     break;
 
                 case 2:
                     m_position = m_roomsLeft[GameManager.instance.m_Random.Next(0, m_roomsLeft.Count)];
 
-                    if (m_mapPosition.TryGetValue(m_position, out l_tempo))
+                    if (m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position, out l_tempo) && i != l_startB)
                     {
                         l_tempo.m_lockO = true;
-                        m_mapPosition[m_position] = l_tempo;
+                        m_mapPosition[GameManager.instance.Difficulty - 1][m_position] = l_tempo;
                     }
 
                     for (int y = 0; y < 2; y++)
@@ -444,22 +490,22 @@ public class RunGenerateDungeon : MonoBehaviour
                         m_position += Vector2.left;
 
                         Rooms l_room = new Rooms();
-                        if (y == 0)
+                        if (y == 0 && i != l_startB)
                         {
                             l_room.m_lock = true;
                             l_room.m_lockE = true;
                         }
-                        m_mapPosition.Add(m_position, l_room);
+                        m_mapPosition[GameManager.instance.Difficulty - 1].Add(m_position, l_room);
                     }
                     break;
 
                 case 3:
                     m_position = m_roomsTop[GameManager.instance.m_Random.Next(0, m_roomsTop.Count)];
 
-                    if (m_mapPosition.TryGetValue(m_position, out l_tempo))
+                    if (m_mapPosition[GameManager.instance.Difficulty - 1].TryGetValue(m_position, out l_tempo) && i != l_startB)
                     {
                         l_tempo.m_lockN = true;
-                        m_mapPosition[m_position] = l_tempo;
+                        m_mapPosition[GameManager.instance.Difficulty - 1][m_position] = l_tempo;
                     }
 
                     for (int y = 0; y < 2; y++)
@@ -467,21 +513,35 @@ public class RunGenerateDungeon : MonoBehaviour
                         m_position += Vector2.up;
 
                         Rooms l_room = new Rooms();
-                        if (y == 0)
+                        if (y == 0 && i != l_startB)
                         {
                             l_room.m_lock = true;
                             l_room.m_lockS = true;
                         }
 
-                        m_mapPosition.Add(m_position, l_room);
+                        m_mapPosition[GameManager.instance.Difficulty - 1].Add(m_position, l_room);
                     }
                     break;
             }
 
 
-            for (int y = 2; y < GameManager.instance.Levels[0].NBranche[i].Room; y++)
+            for (int y = 2; y < GameManager.instance.Levels[GameManager.instance.Difficulty - 1].NBranche[i-l_startB].Room; y++)
             {
-                GenerateBranche(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)], (i + 2) % 4);
+                if(y == GameManager.instance.Levels[0].NBranche[i - l_startB].Room - 1 && i != GameManager.instance.Levels[0].NBranche.Count + l_startB - 1)
+                {
+                    GenerateBranche(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)], (i + 2) % 4,true);
+                }
+                else
+                {
+                    GenerateBranche(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)], (i + 2) % 4);
+                }
+                
+            }
+            
+            
+            if(i < GameManager.instance.Levels[0].NBranche.Count + l_startB-1)
+            {
+
             }
         }
 
