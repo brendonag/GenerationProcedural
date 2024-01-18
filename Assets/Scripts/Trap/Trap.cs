@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Trap : MonoBehaviour
 {
@@ -85,6 +86,12 @@ public class Trap : MonoBehaviour
                     Player.Instance.GoBlackout(ChangeBlackout(isLastLevel), _durationBlackout);
                     _effects.sprite = _listSprite[7];
                     break;
+                case TrapType.MEGATRAP:
+                    GameManager.instance.NextFloor(2);
+                    break;
+                case TrapType.MEGATP:
+                    Player.Instance.GoToSpecialRoom();
+                    break;
             }
             StartCoroutine(ActiveTrap());
         }
@@ -148,6 +155,7 @@ public class Trap : MonoBehaviour
         }
         return list;
     }
+
 
     private void ChangeParameters(int difficulty)
     {
@@ -241,7 +249,6 @@ public class Trap : MonoBehaviour
             yield return null;
         }
     }
-
     private IEnumerator FadeEffects(float p_duration)
     {
         float elapsedTime = 0;

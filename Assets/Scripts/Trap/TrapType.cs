@@ -12,5 +12,7 @@ public enum TrapType
     SLOW,
     SPEED,
     STRAIGHT,
-    BLACKOUT
+    BLACKOUT,
+    MEGATP,
+    MEGATRAP
 }

@@ -50,18 +50,18 @@ public class RandomTrap : MonoBehaviour
     {
         m_trap = GetComponent<Trap>();
 
-        _difficulty = GameManager.instance.Levels[0].Dificulty;
-        AdaptDifficulty(1);
-
+        _difficulty = GameManager.instance.Difficulty;
+        AdaptDifficulty(_difficulty);
     }
 
     private void AdaptDifficulty(int difficulty)
     {
-        switch(difficulty)
+        switch (difficulty)
         {
             case 1:
+
                 OnEasy();
-                
+
                 break;
 
             case 2:
@@ -70,13 +70,23 @@ public class RandomTrap : MonoBehaviour
 
             case 3:
                 OnHard();
+
+                if (!GameManager.instance.IsMegaTrap)
+                {
+                    GetMegaTrap();
+                }
                 break;
 
-            default: OnEasy();
+            default:
+                OnEasy();
                 break;
         }
-
         m_trap.Difficulty = difficulty;
+
+        if (!GameManager.instance.IsMegaTp && !GameManager.instance.IsMegaTrap)
+        {
+            GetMegaTp();
+        }
     }
 
     private void OnEasy()
@@ -127,7 +137,7 @@ public class RandomTrap : MonoBehaviour
         int pSl = 10;
         int pPa = 10;
         int pSp = 10;
-        int pBl = 10;
+        int pBl = 20;
 
         int l_rand = GameManager.instance.m_Random.Next(0, 100);
 
@@ -178,4 +188,19 @@ public class RandomTrap : MonoBehaviour
         else if (l_rand < pMi + pTp + pAl + pRe + pSl + pPa + pSp + pBl + pSt) { m_trap.Type = TrapType.STRAIGHT; }
     }
 
+    private void GetMegaTp()
+    {
+        int pMTP = 100;
+        int l_rand = GameManager.instance.m_Random.Next(0, 100);
+
+        if (l_rand < pMTP) { m_trap.Type = TrapType.MEGATP; GameManager.instance.IsMegaTp = true; }
+    }
+
+    private void GetMegaTrap()
+    {
+        int pMTR = 15;
+        int l_rand = GameManager.instance.m_Random.Next(0, 100);
+
+        if (l_rand < pMTR) { m_trap.Type = TrapType.MEGATRAP; GameManager.instance.IsMegaTrap = true; }
+    }
 }

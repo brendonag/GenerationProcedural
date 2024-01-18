@@ -287,6 +287,20 @@ public class Player : MonoBehaviour {
         StartCoroutine(TimeBlackout(_blackout, p_duration));
     }
 
+    public void GoToSpecialRoom()
+    {
+        int rnd = 0;
+
+        _room = Room.allRooms[rnd];
+
+        Bounds currentBounds = _room.GetWorldBounds();
+        Vector3 newPosition = currentBounds.center;
+
+        gameObject.transform.position = newPosition;
+
+        EnterRoom(_room);
+    }
+
     //ENUMERATOR EFFECTS
     private IEnumerator TimeStunned(float p_duration)
     {
