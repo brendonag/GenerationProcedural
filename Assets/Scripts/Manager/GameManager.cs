@@ -18,10 +18,16 @@ public class GameManager : MonoBehaviour
     public GameObject m_start;
     public List<GameObject> m_Rooms;
     public GameObject m_end;
-    
 
+    private bool m_isMegaTrap = false;
+    public bool IsMegaTrap { get { return m_isMegaTrap; } set { m_isMegaTrap = value; } }
 
-    
+    private bool m_isMegaTp;
+    public bool IsMegaTp { get { return m_isMegaTp; } set { m_isMegaTp = value; } }
+
+    private int _difficulty;
+    public int Difficulty { get { return _difficulty; } }
+
     static public GameManager instance;
     [HideInInspector] public System.Random m_Random;
 
@@ -36,4 +42,22 @@ public class GameManager : MonoBehaviour
         m_Random = new System.Random(m_seed);        
     }
 
+    private void Start()
+    {
+        SetDifficulty(0);
+    }
+
+    public void NextFloor(int next)
+    {
+        SetDifficulty(next);
+
+        ///CHANGE SCENE
+    }
+
+    public void SetDifficulty(int currentLevel)
+    {
+        _difficulty = Levels[currentLevel].Dificulty;
+    }
+
+    
 }
