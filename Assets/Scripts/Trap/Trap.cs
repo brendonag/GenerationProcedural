@@ -70,10 +70,10 @@ public class Trap : MonoBehaviour
                     Player.Instance.ChangePlayerSpeed(true, _durationSpeed);
                     _effects.sprite = _listSprite[4];
                     break;
-                case TrapType.TP:
+                /*case TrapType.TP:
                     Player.Instance.TpPlayer();
                     _effects.sprite = _listSprite[8];
-                    break;
+                    break;*/
                 case TrapType.ALARME:
                     Player.Instance.ActiveAlarm(CreatePrefab(_numberOfEnemies));
                     _effects.sprite = _listSprite[1];
@@ -87,7 +87,7 @@ public class Trap : MonoBehaviour
                     _effects.sprite = _listSprite[7];
                     break;
                 case TrapType.MEGATRAP:
-                    GameManager.instance.NextFloor(2);
+                    GameManager.instance.NextFloor();
                     break;
                 case TrapType.MEGATP:
                     Player.Instance.GoToSpecialRoom();
@@ -123,10 +123,10 @@ public class Trap : MonoBehaviour
                     enemy.ChangePlayerSpeed(true, _durationSpeed);
                     _effects.sprite = _listSprite[4];
                     break;
-                case TrapType.TP:
+                /*case TrapType.TP:
                     enemy.TpPlayer();
                     _effects.sprite = _listSprite[8];
-                    break;
+                    break;*/
                 case TrapType.ALARME:
                     enemy.ActiveAlarm(CreatePrefab(_numberOfEnemies));
                     _effects.sprite = _listSprite[1];

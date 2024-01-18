@@ -48,7 +48,7 @@ public class RunGenerateDungeon : MonoBehaviour
             
             if(i == 0)
             {
-                Instantiate(m_Player, Vector3.zero, Quaternion.identity);
+                GameManager.instance.m_player = Instantiate(m_Player, Vector3.zero, Quaternion.identity);
             }
 
             m_roomsTop.Clear();
@@ -73,8 +73,8 @@ public class RunGenerateDungeon : MonoBehaviour
 
             m_position = Vector2.zero;
         }
-       
-        
+        GameManager.instance.SetDifficulty(0);
+
     }
 
     private void GenerateRoom(GameObject p_room, bool p_end = false)
@@ -330,6 +330,7 @@ public class RunGenerateDungeon : MonoBehaviour
                 l_roomObject = Instantiate(GameManager.instance.m_start,
                 new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);    
                 l_roomObject.GetComponent<Room>().isStartRoom = true;
+                GameManager.instance.Levels[GameManager.instance.Difficulty-1].m_firstRoom = l_roomObject.GetComponent<Room>();
             }
             else if(l_room.Value.m_end)
             {
@@ -527,7 +528,7 @@ public class RunGenerateDungeon : MonoBehaviour
 
             for (int y = 2; y < GameManager.instance.Levels[GameManager.instance.Difficulty - 1].NBranche[i-l_startB].Room; y++)
             {
-                if(y == GameManager.instance.Levels[0].NBranche[i - l_startB].Room - 1 && i != GameManager.instance.Levels[0].NBranche.Count + l_startB - 1)
+                if(y == GameManager.instance.Levels[GameManager.instance.Difficulty - 1].NBranche[i - l_startB].Room - 1 && i != GameManager.instance.Levels[GameManager.instance.Difficulty - 1].NBranche.Count + l_startB - 1)
                 {
                     GenerateBranche(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)], (i + 2) % 4,true);
                 }
@@ -537,12 +538,7 @@ public class RunGenerateDungeon : MonoBehaviour
                 }
                 
             }
-            
-            
-            if(i < GameManager.instance.Levels[0].NBranche.Count + l_startB-1)
-            {
-
-            }
+       
         }
 
         GenerateRoom(GameManager.instance.m_end, true);

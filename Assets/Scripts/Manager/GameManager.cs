@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     static public GameManager instance;
     [HideInInspector] public System.Random m_Random;
-
+    [HideInInspector] public GameObject m_player;
     private void Awake()
     {
         if (instance == null) { instance = this; }
@@ -60,9 +60,21 @@ public class GameManager : MonoBehaviour
         SetDifficulty(0);
     }
 
-    public void NextFloor(int next)
+    public void NextFloor()
     {
-        SetDifficulty(next);
+        m_levels[Difficulty -1].m_ObjLevel.SetActive(false);
+                
+        SetDifficulty(Difficulty);
+        Bounds currentBounds = m_levels[Difficulty - 1].m_firstRoom.GetWorldBounds();
+        Vector3 newPosition = currentBounds.center;
+
+        m_player.transform.position = newPosition;
+
+        m_player.GetComponent<Player>().EnterRoom(m_levels[Difficulty -1].m_firstRoom);
+
+
+        m_levels[Difficulty - 1].m_ObjLevel.SetActive(true);
+
 
         ///CHANGE SCENE
     }
