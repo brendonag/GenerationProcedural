@@ -26,6 +26,10 @@ public struct Branche
 public struct Rooms
 {
     public bool m_lock;
+    public bool m_lockN;
+    public bool m_lockO;
+    public bool m_lockS;
+    public bool m_lockE;
     public bool m_start;
     public bool m_end;
     public Vector2 m_position;
