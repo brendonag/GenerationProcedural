@@ -6,9 +6,9 @@ using UnityEngine;
 /// Heart collectible
 /// </summary>
 public class HeartCollectible : ACollectible {
-
+    [SerializeField] private int _gainLife;
     protected override void OnCollect()
     {
-        Player.Instance.life++;
+        Player.Instance.life += _gainLife;
     }
 }

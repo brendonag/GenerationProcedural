@@ -88,9 +88,11 @@ public class Trap : MonoBehaviour
                     break;
                 case TrapType.MEGATRAP:
                     GameManager.instance.NextFloor(2);
+                    _effects.sprite = _listSprite[8];
                     break;
                 case TrapType.MEGATP:
                     Player.Instance.GoToSpecialRoom();
+                    _effects.sprite = _listSprite[8];
                     break;
             }
             StartCoroutine(ActiveTrap());
