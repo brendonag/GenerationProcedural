@@ -42,38 +42,12 @@ public class RunGenerateDungeon : MonoBehaviour
     {
         for (int i = 0; i < GameManager.instance.Levels.Length; i++)
         {
-            GameManager.instance.SetDifficulty(i);
             m_mapPosition.Add(new Dictionary<Vector2, Rooms>());
-            Generate();
-            
-            if(i == 0)
-            {
-                GameManager.instance.m_player = Instantiate(m_Player, Vector3.zero, Quaternion.identity);
-            }
-
-            m_roomsTop.Clear();
-            m_roomsRight.Clear();
-            m_roomsBottom.Clear();
-            m_roomsLeft.Clear();
-
-            m_bRoomsTop.Clear();
-            m_bRoomsRight.Clear();
-            m_bRoomsBottom.Clear();
-            m_bRoomsLeft.Clear();
-
-            m_roomsTop.Add(Vector3.zero);
-            m_roomsRight.Add(Vector3.zero);
-            m_roomsBottom.Add(Vector3.zero);
-            m_roomsLeft.Add(Vector3.zero);
-
-            m_bRoomsTop.Add(Vector3.zero);
-            m_bRoomsRight.Add(Vector3.zero);
-            m_bRoomsBottom.Add(Vector3.zero);
-            m_bRoomsLeft.Add(Vector3.zero);
-
-            m_position = Vector2.zero;
         }
+
         GameManager.instance.SetDifficulty(0);
+        Generate();
+        GameManager.instance.m_player = Instantiate(m_Player, Vector3.zero, Quaternion.identity);
 
     }
 
@@ -416,11 +390,23 @@ public class RunGenerateDungeon : MonoBehaviour
 
     }
 
-    private void Generate()
+    public void Generate()
     {
         Rooms l_start = new Rooms();
         l_start.m_start = true;
+        m_position = Vector2.zero;
         m_mapPosition[GameManager.instance.Difficulty-1].Add(m_position, l_start);
+
+        m_roomsTop.Clear();
+        m_roomsRight.Clear();
+        m_roomsBottom.Clear();
+        m_roomsLeft.Clear();
+
+        m_roomsTop.Add(Vector3.zero);
+        m_roomsRight.Add(Vector3.zero);
+        m_roomsBottom.Add(Vector3.zero);
+        m_roomsLeft.Add(Vector3.zero);
+
 
         for (int i = 1; i < GameManager.instance.Levels[GameManager.instance.Difficulty - 1].Room - 1; i++)
         {

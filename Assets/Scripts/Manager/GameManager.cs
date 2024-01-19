@@ -65,16 +65,20 @@ public class GameManager : MonoBehaviour
         
                 
         SetDifficulty(Difficulty);
-        Bounds currentBounds = m_levels[Difficulty - 1].m_firstRoom.GetWorldBounds();
+        gameObject.GetComponent<RunGenerateDungeon>().Generate();
+        m_levels[Difficulty-1].m_ObjLevel.SetActive(true);
+        
+        Bounds currentBounds = m_levels[Difficulty-1].m_firstRoom.GetWorldBounds();
         Vector3 newPosition = currentBounds.center;
 
         m_player.transform.position = newPosition;
+        
 
-        m_player.GetComponent<Player>().EnterRoom(m_levels[Difficulty -1].m_firstRoom);
+        //Player.Instance.EnterRoom(m_levels[Difficulty].m_firstRoom);
 
 
-        m_levels[Difficulty - 1].m_ObjLevel.SetActive(true);
-        m_levels[Difficulty - 2].m_ObjLevel.SetActive(false);
+        
+        Destroy(m_levels[Difficulty - 2].m_ObjLevel);
 
         ///CHANGE SCENE
     }

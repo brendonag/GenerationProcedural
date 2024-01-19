@@ -100,8 +100,8 @@ public class RandomTrap : MonoBehaviour
         PARA
         */
 
-        int pMi = 20;
-        int pTp = 0;
+        int pMi = 10;
+        int pTp = 10;
         int pAl = 20;
         int pRe = 20;
         int pSl = 20;
@@ -131,8 +131,8 @@ public class RandomTrap : MonoBehaviour
         */
 
         int pMi = 20;
-        int pTp = 0;
-        int pAl = 20;
+        int pTp = 10;
+        int pAl = 10;
         int pRe = 10;
         int pSl = 10;
         int pPa = 10;
@@ -165,8 +165,8 @@ public class RandomTrap : MonoBehaviour
         STRAIGHT
         */
 
-        int pMi = 20;
-        int pTp = 0;
+        int pMi = 10;
+        int pTp = 10;
         int pAl = 10;
         int pRe = 10;
         int pSl = 10;
