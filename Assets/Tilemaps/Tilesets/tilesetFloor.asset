@@ -1095,12 +1095,13 @@ MonoBehaviour:
     paramContainer:
       m_paramList: []
     prefabData:
-      prefab: {fileID: 0}
+      prefab: {fileID: 8404445405975435403, guid: 3ea2dd795137ee040b14b14c203b8921,
+        type: 3}
       offset: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
       offsetMode: 0
-      showTileWithPrefab: 0
-      showPrefabPreviewInTilePalette: 0
+      showTileWithPrefab: 1
+      showPrefabPreviewInTilePalette: 1
     autilingGroup: 0
   - uv:
       serializedVersion: 2
