@@ -141,7 +141,9 @@ public class Room : MonoBehaviour {
 
 	void Start()
 	{
-		RefreshDoors();
+        if (Player.Instance == null)
+            return;
+        RefreshDoors();
         if (isStartRoom)
         {
             Player.Instance.EnterRoom(this);
