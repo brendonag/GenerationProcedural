@@ -670,17 +670,17 @@ PrefabInstance:
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}
       propertyPath: m_levels.Array.data[0].m_nRoom
-      value: 20
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}
       propertyPath: m_levels.Array.data[1].m_nRoom
-      value: 25
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}
       propertyPath: m_levels.Array.data[2].m_nRoom
-      value: 30
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4451088166942793648, guid: ef115c20019fd694e85d46fc2ea7c02a,
         type: 3}

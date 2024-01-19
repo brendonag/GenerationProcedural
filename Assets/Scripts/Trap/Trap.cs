@@ -93,7 +93,11 @@ public class Trap : MonoBehaviour
                     Player.Instance.GoToSpecialRoom();
                     break;
             }
-            StartCoroutine(ActiveTrap());
+            if(Type != TrapType.MEGATRAP)
+            {
+                StartCoroutine(ActiveTrap());
+            }
+
         }
 
         if (collision.attachedRigidbody.gameObject.CompareTag("Enemy"))

@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void NextFloor()
     {
-        m_levels[Difficulty -1].m_ObjLevel.SetActive(false);
+        
                 
         SetDifficulty(Difficulty);
         Bounds currentBounds = m_levels[Difficulty - 1].m_firstRoom.GetWorldBounds();
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
 
         m_levels[Difficulty - 1].m_ObjLevel.SetActive(true);
-
+        m_levels[Difficulty - 2].m_ObjLevel.SetActive(false);
 
         ///CHANGE SCENE
     }
