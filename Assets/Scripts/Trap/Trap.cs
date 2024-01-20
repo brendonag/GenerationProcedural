@@ -129,10 +129,10 @@ public class Trap : MonoBehaviour
                     enemy.ChangePlayerSpeed(true, _durationSpeed);
                     _effects.sprite = _listSprite[4];
                     break;
-                /*case TrapType.TP:
+                case TrapType.TP:
                     enemy.TpPlayer();
                     _effects.sprite = _listSprite[8];
-                    break;*/
+                    break;
                 case TrapType.ALARME:
                     enemy.ActiveAlarm(CreatePrefab(_numberOfEnemies));
                     _effects.sprite = _listSprite[1];

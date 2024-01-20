@@ -9,7 +9,6 @@ public class RunGenerateDungeon : MonoBehaviour
     private int m_last = -1;
 
     private List<GameObject> m_Rooms = new List<GameObject>();
-    //[SerializeField]public bool[,] m_map;
     [SerializeField] private List<Dictionary<Vector2,Rooms>> m_mapPosition = new List<Dictionary<Vector2, Rooms>>();
 
     List<Vector2> m_roomsLeft = new List<Vector2>();
@@ -26,7 +25,6 @@ public class RunGenerateDungeon : MonoBehaviour
 
     private void Awake()
     {
-        //m_map = new bool[GameManager.instance.Levels[0].Room * 2, GameManager.instance.Levels[0].Room * 2];
         m_roomsTop.Add(Vector3.zero);
         m_roomsRight.Add(Vector3.zero);
         m_roomsBottom.Add(Vector3.zero);
@@ -316,6 +314,12 @@ public class RunGenerateDungeon : MonoBehaviour
                 l_roomObject = Instantiate(GameManager.instance.m_roomKey,
                 new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);
             }
+            else if(l_room.Value.m_secretRoom)
+            {
+                l_roomObject = Instantiate(GameManager.instance.m_secretRoom,
+                new Vector3(l_room.Key.x * 11 - 5.5f, l_room.Key.y * 9 - 4.5f, 0), Quaternion.identity);
+                GameManager.instance.Levels[GameManager.instance.Difficulty - 1].m_secretRoom = l_roomObject.GetComponent<Room>();
+            }
             else
             {
                 l_roomObject = Instantiate(GameManager.instance.m_Rooms[GameManager.instance.m_Random.Next(0, GameManager.instance.m_Rooms.Count)],
@@ -396,6 +400,10 @@ public class RunGenerateDungeon : MonoBehaviour
         l_start.m_start = true;
         m_position = Vector2.zero;
         m_mapPosition[GameManager.instance.Difficulty-1].Add(m_position, l_start);
+
+        Rooms l_secret = new Rooms();
+        l_secret.m_secretRoom = true;
+        m_mapPosition[GameManager.instance.Difficulty - 1].Add(new Vector2(1000, 1000), l_secret);
 
         m_roomsTop.Clear();
         m_roomsRight.Clear();

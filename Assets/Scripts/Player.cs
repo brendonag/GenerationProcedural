@@ -289,9 +289,7 @@ public class Player : MonoBehaviour {
 
     public void GoToSpecialRoom()
     {
-        int rnd = 0;
-
-        _room = Room.allRooms[rnd];
+        _room = GameManager.instance.Levels[GameManager.instance.Difficulty - 1].m_secretRoom ;
 
         Bounds currentBounds = _room.GetWorldBounds();
         Vector3 newPosition = currentBounds.center;

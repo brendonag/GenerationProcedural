@@ -190,7 +190,7 @@ public class RandomTrap : MonoBehaviour
 
     private void GetMegaTp()
     {
-        int pMTP = 15;
+        int pMTP = 100;
         int l_rand = GameManager.instance.m_Random.Next(0, 100);
 
         if (l_rand < pMTP) { m_trap.Type = TrapType.MEGATP; GameManager.instance.IsMegaTp = true; }

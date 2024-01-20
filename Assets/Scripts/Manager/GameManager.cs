@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> m_Rooms;
     public GameObject m_end;
     public GameObject m_roomKey;
+    public GameObject m_secretRoom;
 
     private bool m_isMegaTrap = false;
     public bool IsMegaTrap { get { return m_isMegaTrap; } set { m_isMegaTrap = value; } }
